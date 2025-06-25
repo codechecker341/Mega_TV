@@ -2,20 +2,66 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iniciar sesión</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+
+    input {
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #error {
+      margin-top: 15px;
+      color: red;
+      display: none;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Iniciar sesión</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Usuario" required />
-      <input type="password" id="password" placeholder="Contraseña" required />
-      <button type="submit">Ingresar</button>
-      <p id="mensaje"></p>
-    </form>
-  </div>
+  <h1>Acceso a Mega TV</h1>
+  <form id="form-login">
+    <input type="text" id="usuario" name="usuario" placeholder="Usuario" required />
+    <input type="password" id="clave" name="clave" placeholder="Contraseña" required />
+    <button type="submit">Ingresar</button>
+  </form>
+  <div id="error"></div>
+
   <script src="login.js"></script>
 </body>
 </html>
