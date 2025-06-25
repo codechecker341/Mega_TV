@@ -1,4 +1,4 @@
-const API_URL = 'http://18.221.167.106:3000/api/auth/login'; // Cambia esto
+const API_URL = 'https://megatvpro.ddns.net/api/auth/login';
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
