@@ -1,31 +1,49 @@
 const API_URL = 'https://megatvpro.ddns.net/api/auth/login';
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('form-login').addEventListener('submit', async (e) => {
   e.preventDefault();
-  
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const mensaje = document.getElementById('mensaje');
+
+  const usuario = document.getElementById('usuario').value.trim();
+  const clave = document.getElementById('clave').value.trim();
 
   try {
-    const response = await fetch(API_URL, {
+    const respuesta = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ usuario, clave })
     });
 
-    const data = await response.json();
+    if (respuesta.ok) {
+      const datos = await respuesta.json();
 
-    if (response.ok) {
-      localStorage.setItem('session', data.session);
-      localStorage.setItem('role', data.usuario.role);
-      localStorage.setItem('username', data.usuario.username);
-      mensaje.textContent = 'Login exitoso';
-      location.href = data.usuario.role + '.html';
+      // Redirigir al panel correspondiente según el rol
+      if (datos.rol === 'superadmin') {
+        window.location.href = 'superadmin.html';
+      } else if (datos.rol === 'admin') {
+        window.location.href = 'admin.html';
+      } else if (datos.rol === 'usuario') {
+        window.location.href = 'usuario.html';
+      } else {
+        alert('Rol no reconocido.');
+      }
+
+    } else if (respuesta.status === 401) {
+      mostrarError('Credenciales incorrectas');
     } else {
-      mensaje.textContent = data.msg || 'Error al iniciar sesión';
+      mostrarError('Error en el servidor');
     }
-  } catch (err) {
-    mensaje.textContent = 'Servidor no disponible';
+
+  } catch (error) {
+    console.error('Error de red:', error);
+    mostrarError('Servidor no disponible');
   }
 });
+
+function mostrarError(mensaje) {
+  const errorDiv = document.getElementById('error');
+  errorDiv.textContent = mensaje;
+  errorDiv.style.display = 'block';
+}
